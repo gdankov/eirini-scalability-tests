@@ -54,10 +54,13 @@ deploy() {
 main() {
     local start=0;
     local end=0
+    local batch_number=0
     while [[ "$end" -lt "$TIMES" ]]; do
         end=$(bc <<< "$start + $BATCH_SIZE")
         deploy $start $end
         start=$(bc <<< "$end + 1")
+        ((batch_number++))
+        echo "Batch ${batch_number} done"
     done
 
     for i in $(seq 1 $TIMES);do
